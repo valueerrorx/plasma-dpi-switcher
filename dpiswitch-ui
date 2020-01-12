@@ -1,0 +1,154 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# Copyleft 2020 Thomas Michael Weissel
+#
+# This software may be modified and distributed under the terms
+# of the license.  See the LICENSE file for details.
+
+from PyQt5 import QtWidgets
+from PyQt5.QtGui import QIcon, QPixmap, QFont
+from PyQt5.QtCore import Qt, QSize
+from PyQt5.uic import loadUi
+
+import sys
+import os
+import subprocess
+
+from dpiswitchutils import validator, plasma, schema
+from dpiswitchutils.config import get_default_config_filename_assert_exists, load_config_file
+from dpiswitchutils.utils import *
+
+
+
+class MeinDialog(QtWidgets.QDialog):
+    def __init__(self):
+        QtWidgets.QDialog.__init__(self)
+        self.scriptdir = os.path.dirname(os.path.abspath(__file__))
+        uifile = 'dpiswitch.ui'
+        winicon = 'shield.png'
+        self.ui = loadUi(uifile)        # load UI
+        self.ui.setWindowIcon(QIcon(winicon))
+
+        self.ui.exit.clicked.connect(self.onAbbrechen)        # setup Slots
+        self.ui.start.clicked.connect(self.onLoadProfile)
+        self.ui.saveas.clicked.connect(self.saveasProfile)
+        self.ui.remove.clicked.connect(self.deleteProfile)
+
+
+        self.profilefile = get_default_config_filename_assert_exists(os.environ)
+        validator.assert_valid_config(self.profilefile , schema.SCHEMA)
+
+        self.getProfiles() 
+
+    
+    def getProfiles(self):
+        """
+        scans for profile file for profiles and adds a widget in the profile listview
+        """
+        self.config = load_config_file(self.profilefile)
+
+        self.ui.profileview.clear()
+        for index, profile in enumerate(self.config.profiles):
+            item = QtWidgets.QListWidgetItem()
+            item.setSizeHint(QSize(40, 40));
+            item.name = QtWidgets.QLabel()
+            item.name.setText("%s" % profile.name)
+            item.desc = QtWidgets.QLabel()
+            item.desc.setText("%s" % profile.description)
+            item.desc.setAlignment(Qt.AlignVCenter|Qt.AlignRight)
+
+            icon = QIcon.fromTheme("answer")
+            item.icon = QtWidgets.QLabel()
+            item.icon.setPixmap(QPixmap(icon.pixmap(28)))
+            item.icon.setFixedWidth(40)
+
+            grid = QtWidgets.QGridLayout()
+            grid.addWidget(item.icon, 0, 0)
+            grid.addWidget(item.name, 0, 1)
+            grid.addWidget(item.desc, 0, 2)
+
+            widget = QtWidgets.QWidget()
+            widget.setLayout(grid)
+
+            self.ui.profileview.addItem(item)
+            self.ui.profileview.setItemWidget(item, widget)
+
+
+    def onLoadProfile(self):
+        """
+        writes the plasma configuration files and reloads plasma desktop
+        """
+        try:
+            profilename = self.ui.profileview.currentItem().name.text()
+        except:
+            print("nothing selected")
+            self.ui.status.setText("No profile selected")
+            return
+
+        if profilename:
+            self.ui.status.setText("Selected Profile: %s" %profilename)
+            plasma.apply_profile(profilename)
+
+
+
+    def saveasProfile(self):
+        saveasdialog = QtWidgets.QInputDialog()
+        text, ok = saveasdialog.getText(self, 'Save as', 'Enter a profile name:')
+        desc, okdesc = saveasdialog.getText(self, 'Save as', 'Enter a profile description:')
+        if ok and okdesc:
+            profilename = text.strip()
+            profiledesc = desc.strip()
+
+            try:
+                find_profile(self.config, profilename)
+                raise Exception("Profile '{}' already exists".format(args.profile))
+            except ProfileNotFoundException:
+                pass
+
+            profile = plasma.read_current_profile()
+            profile["name"] = profilename
+            profile["description"] = profiledesc
+
+            profile_save_to_file(profile, self.profilefile)
+
+            print("Profile '{}' successfully generated!".format(profilename))
+
+            self.getProfiles()
+        else:
+            return
+
+
+    def deleteProfile(self):
+        """
+        deletes the selected profile
+        """
+
+        try:
+            profilename = self.ui.profileview.currentItem().name.text()
+        except:
+            print("nothing selected")
+            self.ui.status.setText("No profile selected")
+            return
+
+        if profilename:
+            self.ui.status.setText("Deleted Profile: %s" %profilename)
+            profile_remove(profilename, self.profilefile)
+            self.getProfiles()
+
+
+
+    def onAbbrechen(self):    # Exit button
+        self.ui.close()
+        os._exit(0)
+
+
+    
+
+
+
+
+app = QtWidgets.QApplication(sys.argv)
+dialog = MeinDialog()
+dialog.ui.show()   #show user interface
+sys.exit(app.exec_())
