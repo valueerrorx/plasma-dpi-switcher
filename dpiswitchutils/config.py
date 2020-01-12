@@ -4,7 +4,7 @@ from collections import namedtuple
 
 
 def get_default_config_filename(env):
-    f = os.path.join(env.get("XDG_CONFIG_HOME", "~/.config"), "maldoinc/dpiswitch/profile.json")
+    f = os.path.join(env.get("XDG_CONFIG_HOME", "~/.config"), "dpiswitch/profile.json")
 
     return os.path.expanduser(f)
 
@@ -25,8 +25,15 @@ def get_default_config():
 
 
 def generate_default_config(fn):
-    os.makedirs(os.path.dirname(fn))
-    open(fn, 'w').write(json.dumps(get_default_config(), indent=4))
+    try:
+        os.makedirs(os.path.dirname(fn))
+    except:
+        pass
+
+    try:
+        open(fn, 'w').write(json.dumps(get_default_config(), indent=4))
+    except:
+        pass
 
 
 def get_default_config_filename_assert_exists(env):

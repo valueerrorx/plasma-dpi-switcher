@@ -1,20 +1,13 @@
 # dpiswitch — a KDE Plasma DPI switcher
 
-![CircleCI (all branches)](https://img.shields.io/circleci/project/github/maldoinc/plasma-dpi-switcher/develop.svg?logo=circleci&style=flat-square)&nbsp;
-![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/maldoinc/plasma-dpi-switcher.svg?color=brightgreen&logo=github&style=flat-square&label=latest%20tag)
 
-Configure and automate KDE Plasma DPI scaling from the command line by using a JSON-based configuration file with different profiles.
+Configure and automate KDE Plasma DPI scaling via UI or from the command line by using a JSON-based configuration file with different profiles.
 
-<p align="center">
-  <img src='res/demo.gif' alt='dpiswitch in action' />
-</p>
 
 ---
 
 ## Purpose
 This tool is particularly handy for people who need different scaling factors at different times. Such as using a laptop where the built in display and the external one(s) need different scaling values.
-
-Manually changing DPI settings, panel height/width, clock font or other settings for widgets each time the computer is connected to a different display is tedious.
 
 This tool will automatically update all the necessary settings reducing manual work to a minimum.
 
@@ -27,7 +20,7 @@ This tool will automatically update all the necessary settings reducing manual w
 
 ### Install
 ```bash
-git clone https://github.com/maldoinc/plasma-dpi-switcher
+git clone https://github.com/valueerrorx/plasma-dpi-switcher.git
 cd plasma-dpi-switcher
 sudo python3 setup.py install --record files.txt
 ```
@@ -38,7 +31,7 @@ sudo python3 setup.py install --record files.txt
 rm $(cat files.txt)
 ```
 
-## Getting started
+## Getting started in the command line
 
 The default installation will contain no profiles. The user needs to generate all of them either manually as described below or automatically using the `--generate` flag.
 
