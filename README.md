@@ -3,6 +3,7 @@
 
 Configure and automate KDE Plasma DPI scaling via UI or from the command line by using a JSON-based configuration file with different profiles.
 
+<img src='ui/ui.png'>
 
 ---
 
