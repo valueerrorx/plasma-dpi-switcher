@@ -12,6 +12,7 @@ This tool is particularly handy for people who need different scaling factors at
 
 This tool will automatically update all the necessary settings reducing manual work to a minimum.
 
+Special thx to https://github.com/maldoinc who did most of the hard work!
 ## Installation
 
 ### Requirements
