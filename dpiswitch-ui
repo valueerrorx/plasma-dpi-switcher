@@ -26,7 +26,7 @@ class MeinDialog(QtWidgets.QDialog):
         QtWidgets.QDialog.__init__(self)
         self.scriptdir = os.path.dirname(os.path.abspath(__file__))
         uifile = 'dpiswitch.ui'
-        winicon = 'shield.png'
+        winicon = 'video-display.svg'
         self.ui = loadUi(uifile)        # load UI
         self.ui.setWindowIcon(QIcon(winicon))
 
@@ -88,7 +88,9 @@ class MeinDialog(QtWidgets.QDialog):
 
         if profilename:
             self.ui.status.setText("Selected Profile: %s" %profilename)
-            plasma.apply_profile(profilename)
+
+            profile = find_profile(self.config, profilename)
+            plasma.apply_profile(profile)
 
 
 
