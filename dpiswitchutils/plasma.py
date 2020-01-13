@@ -127,8 +127,11 @@ def read_current_profile():
 
 
     conf = safe_read_ini(CONFIG_KDEGLOBALS)
-    scaling = float(conf.get('KScreen', 'ScaleFactor'))
-    scalefactors = str(conf.get('KScreen','ScreenScaleFactors'))
+    try:
+        scaling = float(conf.get('KScreen', 'ScaleFactor'))
+        scalefactors = str(conf.get('KScreen','ScreenScaleFactors'))
+    except:
+        scaling = 1
 
     conf = safe_read_ini(CONFIG_KCMINPUT)
     cursorsize = try_parse_int(conf.get('Mouse', 'cursorSize'), 24)

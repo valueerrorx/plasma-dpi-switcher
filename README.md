@@ -31,6 +31,9 @@ sudo python3 setup.py install --record files.txt
 rm $(cat files.txt)
 ```
 
+## Getting started 
+open a terminal and run `dpiswitch-ui`
+
 ## Getting started in the command line
 
 The default installation will contain no profiles. The user needs to generate all of them either manually as described below or automatically using the `--generate` flag.
@@ -124,10 +127,6 @@ each of the groups is an element inside the object inside the `groups` array. Th
 * A logout is needed for all the DPI scaling features to be fully applied.
 * Beware that Plasma's fractional scaling is a work in progress and may cause different glitches and/or artifacts throughout the desktop or programs. Use integer scaling factors for best results.
 
-
-## Future work
-
-* A GUI to manage these profiles in addition to the command line.
 
 ## Issue reporting
 

@@ -13,28 +13,36 @@ from PyQt5.uic import loadUi
 
 import sys
 import os
-import subprocess
+
 
 from dpiswitchutils import validator, plasma, schema
 from dpiswitchutils.config import get_default_config_filename_assert_exists, load_config_file
 from dpiswitchutils.utils import *
 
 
+try:
+    import importlib.resources as pkg_resources
+except ImportError:
+    # Try backported to PY<37 `importlib_resources`.
+    import importlib_resources as pkg_resources
+
+import ui
+
+uitemplate = pkg_resources.open_text(ui, 'dpiswitch.ui')
+
+
+
+
 
 class MeinDialog(QtWidgets.QDialog):
     def __init__(self):
         QtWidgets.QDialog.__init__(self)
-        self.scriptdir = os.path.dirname(os.path.abspath(__file__))
-        uifile = 'dpiswitch.ui'
-        winicon = 'video-display.svg'
-        self.ui = loadUi(uifile)        # load UI
-        self.ui.setWindowIcon(QIcon(winicon))
-
+        self.ui = loadUi(uitemplate)        # load UI
+        self.ui.setWindowIcon(QIcon.fromTheme('video-display'))
         self.ui.exit.clicked.connect(self.onAbbrechen)        # setup Slots
         self.ui.start.clicked.connect(self.onLoadProfile)
         self.ui.saveas.clicked.connect(self.saveasProfile)
         self.ui.remove.clicked.connect(self.deleteProfile)
-
 
         self.profilefile = get_default_config_filename_assert_exists(os.environ)
         validator.assert_valid_config(self.profilefile , schema.SCHEMA)

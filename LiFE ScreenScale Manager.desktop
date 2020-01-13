@@ -1,0 +1,20 @@
+[Desktop Entry]
+Comment[en_US]=
+Comment=
+Exec=dpiswitch-ui
+GenericName[en_US]=Manager for different ScreenScale profiles
+GenericName=Manager for different ScreenScale profiles
+Icon=video-display
+MimeType=
+Name[en_US]=LiFE ScreenScale Manager
+Name=LiFE ScreenScale Manager
+NoDisplay=false
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=
