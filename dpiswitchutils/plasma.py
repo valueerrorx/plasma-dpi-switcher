@@ -124,12 +124,21 @@ def plasmashell_config_read_get_panel_info():
 
 
 def read_current_profile():
-    conf = safe_read_ini(CONFIG_STARTUP)
+
+
+    conf = safe_read_ini(CONFIG_KDEGLOBALS)
+    scaling = int(conf.get('KScreen', 'ScaleFactor'))
+    scalefactors = str(conf.get('KScreen','ScreenScaleFactors'))
+
+    conf = safe_read_ini(CONFIG_KCMINPUT)
+    cursorsize = try_parse_int(conf.get('Mouse', 'cursorSize'), 24)
+
+
 
     return {
-        "scaling": font_dpi_to_scale_factor(int(conf.get(SECTION_ROOT, 'kcmfonts_general_forcefontdpi'))),
+        "scaling": scaling,
         "cursor": {
-            "size": try_parse_int(conf.get(SECTION_ROOT, 'kcminputrc_mouse_cursorsize'), 24)
+            "size": cursorsize
         },
         "panels": plasmashell_config_read_get_panel_info(),
         "widgets": []
