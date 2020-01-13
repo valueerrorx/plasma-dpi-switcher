@@ -24,7 +24,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Plasma DPI Switching Tool</string>
+   <string>LiFE ScreenScale Profile Manager</string>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -162,6 +162,9 @@
                  <height>50</height>
                 </size>
                </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Saves current ScreenScale,&lt;br/&gt;Panelheight, Mousecursorsize &lt;br/&gt;as new profile&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -192,7 +195,7 @@
                 <pixmap>video-display.svg</pixmap>
                </property>
                <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
                </property>
               </widget>
              </item>
