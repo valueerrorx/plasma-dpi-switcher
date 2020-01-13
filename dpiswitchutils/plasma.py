@@ -127,7 +127,7 @@ def read_current_profile():
 
 
     conf = safe_read_ini(CONFIG_KDEGLOBALS)
-    scaling = int(conf.get('KScreen', 'ScaleFactor'))
+    scaling = conf.get('KScreen', 'ScaleFactor')
     scalefactors = str(conf.get('KScreen','ScreenScaleFactors'))
 
     conf = safe_read_ini(CONFIG_KCMINPUT)
