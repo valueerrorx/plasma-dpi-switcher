@@ -14,7 +14,7 @@ SCHEMA = {
                 "properties": {
                     "name": {"type": "string"},
                     "description": {"type": ["string", "null"]},
-                    "scaling": {"type": "float"},
+                    "scaling": {"type": "number"},
                     "cursor": {
                         "type": "object",
                         "required": ["size"],
