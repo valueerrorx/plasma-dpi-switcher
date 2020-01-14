@@ -64,17 +64,22 @@ class MeinDialog(QtWidgets.QDialog):
             item.name.setText("%s" % profile.name)
             item.desc = QtWidgets.QLabel()
             item.desc.setText("%s" % profile.description)
-            item.desc.setAlignment(Qt.AlignVCenter|Qt.AlignRight)
+            #item.desc.setAlignment(Qt.AlignVCenter|Qt.AlignRight)
+            item.scale = QtWidgets.QLabel()
+            item.scale.setText("%s" % profile.scaling)
+            item.scale.setAlignment(Qt.AlignVCenter|Qt.AlignRight)
+
 
             icon = QIcon.fromTheme("answer")
             item.icon = QtWidgets.QLabel()
-            item.icon.setPixmap(QPixmap(icon.pixmap(28)))
-            item.icon.setFixedWidth(40)
+            item.icon.setPixmap(QPixmap(icon.pixmap(22)))
+            item.icon.setFixedWidth(22)
 
             grid = QtWidgets.QGridLayout()
             grid.addWidget(item.icon, 0, 0)
             grid.addWidget(item.name, 0, 1)
             grid.addWidget(item.desc, 0, 2)
+            grid.addWidget(item.scale, 0, 3)
 
             widget = QtWidgets.QWidget()
             widget.setLayout(grid)
