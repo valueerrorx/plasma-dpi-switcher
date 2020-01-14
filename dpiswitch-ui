@@ -130,19 +130,22 @@ class MeinDialog(QtWidgets.QDialog):
 
             try:
                 find_profile(self.config, profilename)
-                raise Exception("Profile '{}' already exists".format(args.profile))
-            except ProfileNotFoundException:
+                self.ui.status.setText("Profile: %s already exists" %profilename)
+                saveprofile = False
+            except:
+                saveprofile = True
                 pass
 
-            profile = plasma.read_current_profile()
-            profile["name"] = profilename
-            profile["description"] = profiledesc
+            if saveprofile:
+                profile = plasma.read_current_profile()
+                profile["name"] = profilename
+                profile["description"] = profiledesc
 
-            profile_save_to_file(profile, self.profilefile)
+                profile_save_to_file(profile, self.profilefile)
+                self.ui.status.setText("Profile: %s saved!" %profilename)
+                print("Profile '{}' successfully generated!".format(profilename))
 
-            print("Profile '{}' successfully generated!".format(profilename))
-
-            self.getProfiles()
+                self.getProfiles()
         else:
             return
 

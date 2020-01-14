@@ -123,8 +123,8 @@ def plasmashell_config_read_get_panel_info():
     return res
 
 
-def read_current_profile():
 
+def read_current_profile():
 
     conf = safe_read_ini(CONFIG_KDEGLOBALS)
     try:
@@ -138,6 +138,7 @@ def read_current_profile():
         cursorsize = try_parse_int(conf.get('Mouse', 'cursorSize'), 24)
     except:
         cursorsize = 24
+
 
     return {
         "scaling": scaling,
