@@ -18,7 +18,10 @@ Special thx to https://github.com/maldoinc who did most of the hard work!
 ### Requirements
 
 - Python 3
-- Python 3 setuptools
+- setuptools
+- Xlib
+- jsonschema
+- importlib_resources
 
 ### Install
 ```bash
