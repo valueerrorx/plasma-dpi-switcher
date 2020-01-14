@@ -134,9 +134,10 @@ def read_current_profile():
         scaling = 1
 
     conf = safe_read_ini(CONFIG_KCMINPUT)
-    cursorsize = try_parse_int(conf.get('Mouse', 'cursorSize'), 24)
-
-
+    try:
+        cursorsize = try_parse_int(conf.get('Mouse', 'cursorSize'), 24)
+    except:
+        cursorsize = 24
 
     return {
         "scaling": scaling,
