@@ -95,11 +95,24 @@ class MeinDialog(QtWidgets.QDialog):
             return
 
         if profilename:
-            self.ui.status.setText("Selected Profile: %s" %profilename)
+            self.msg = QtWidgets.QMessageBox()
+            self.msg.setIcon(QtWidgets.QMessageBox.Information)
+            self.msg.setText("Do you want to apply the profile:\n%s\nand restart the desktop?" %profilename)
 
-            profile = find_profile(self.config, profilename)
-            plasma.apply_profile(profile)
-            plasma.session_end()
+            self.msg.setWindowTitle("LiFE ScreenScale Manager")
+            self.msg.setStandardButtons(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+            retval = self.msg.exec_()   # 16384 = yes, 65536 = no
+
+            if str(retval) == "16384":
+                self.ui.status.setText("Selected Profile: %s" %profilename)
+                profile = find_profile(self.config, profilename)
+                plasma.apply_profile(profile)
+                plasma.session_end()
+                self.msg = False
+            else:
+                self.msg = False
+
+
 
 
     def saveasProfile(self):
@@ -142,9 +155,24 @@ class MeinDialog(QtWidgets.QDialog):
             return
 
         if profilename:
-            self.ui.status.setText("Deleted Profile: %s" %profilename)
-            profile_remove(profilename, self.profilefile)
-            self.getProfiles()
+            self.msg = QtWidgets.QMessageBox()
+            self.msg.setIcon(QtWidgets.QMessageBox.Information)
+            self.msg.setText("Do you want to delete the profile:\n\n%s" %profilename)
+
+            self.msg.setWindowTitle("LiFE ScreenScale Manager")
+            self.msg.setStandardButtons(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+            retval = self.msg.exec_()   # 16384 = yes, 65536 = no
+
+            if str(retval) == "16384":
+                self.ui.status.setText("Deleted Profile: %s" % profilename)
+                profile_remove(profilename, self.profilefile)
+                self.getProfiles()
+                self.msg = False
+            else:
+                self.msg = False
+
+
+
 
 
 

@@ -137,7 +137,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>Delete selected Profile</string>
+                <string>Delete Profile</string>
                </property>
                <property name="icon">
                 <iconset theme="trash-empty">
@@ -227,7 +227,8 @@
                 <string>Activate Profile</string>
                </property>
                <property name="icon">
-                <iconset theme="video-display"/>
+                <iconset theme="video-display">
+                 <normaloff>.</normaloff>.</iconset>
                </property>
                <property name="iconSize">
                 <size>
