@@ -63,7 +63,7 @@ def safe_read_ini(filename):
     if not contents.startswith('['):
         contents = '[{}]\n{}'.format(SECTION_ROOT, contents)
 
-    config_parser = configparser.RawConfigParser()
+    config_parser = configparser.RawConfigParser(strict=False)
     config_parser.read_string(contents)
 
     return config_parser
